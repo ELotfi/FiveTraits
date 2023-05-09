@@ -28,12 +28,20 @@ def	add_sample(sample, vote):
 		st.session_state.current_index += 1 
 
 
+def save_data(source_path, en):
+	annotated = st.session_state.annotated
+	current_idx = st.session_state.current_index
+	results_path = f'results/annot_{source_path[5:-5]}_{en}_{en + current_idx}.json'
+	json.dump(annotated, open(results_path, 'w'))
+	json.dump({'st':en, 'en':current_idx}, open('results/last_session.json', 'w'))
 
-def annot_dialog():
+
+
+def annot_dialog(source_path, en):
 	dial_col, gap_col1, annot_col1, gap_col2, annot_col2 = st.columns([.2,.1,1,.1,1])
 	if dial_col.button("Save&Exit"):
+		save_data(source_path, en)
 		st.write(f"Saved.")
-		return st.session_state.annotated
 	else:
 		if st.session_state.current_index < len(st.session_state.samples):
 			sample = st.session_state.samples[st.session_state.current_index]
@@ -54,19 +62,23 @@ def annot_dialog():
 
 		else:
 			st.write(f"🎈 Done! All annotated.")
-			return st.session_state.annotated
+
 
 
 
 
 if __name__ == "__main__":
-	data = json.load(open('data/samples_with_trait_dialog_both_100_sep.json'))
+	source_path = 'data/trait_dialog_both.json'
+	last_session =  json.load(open('results/last_session.json'))
+	en = last_session['en']
+	data = json.load(open(source_path))[:50][en:]
 	if "annotated" not in st.session_state:
 		st.session_state.annotated = []
 		st.session_state.samples = data
 		st.session_state.current_index = 0
-	annotated = annot_dialog()
-	json.dump(annotated, open(f'annotated_traits_dlg_both.json', 'w'))
+
+	annot_dialog(source_path, en)
+
 	
 
 #to do
