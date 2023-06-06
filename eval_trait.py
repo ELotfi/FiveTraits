@@ -38,7 +38,7 @@ def save_data(source_path, en):
 
 
 def annot_dialog(source_path, en):
-	dial_col, gap_col1, annot_col1, gap_col2, annot_col2 = st.columns([.2,.1,1,.1,1])
+	dial_col, gap_col1, annot_col1, gap_col2, annot_col2 = st.columns([.5,.1,1,.1,1])
 	if dial_col.button("Save&Exit"):
 		save_data(source_path, en)
 		st.write(f"Saved.")
@@ -46,8 +46,8 @@ def annot_dialog(source_path, en):
 		if st.session_state.current_index < len(st.session_state.samples):
 			sample = st.session_state.samples[st.session_state.current_index]
 			dial_col.write(f"Sample {st.session_state.current_index + 1} out of {len(st.session_state.samples)}")
-			#dial_col.caption("Persona:")
-			#dial_col.write(sample['self_persona'])
+			dial_col.caption("Agent's Persona:")
+			dial_col.write(sample['self_persona'])
 			chats = sample['chats']
 			trait = sample['trait']
 
@@ -68,10 +68,10 @@ def annot_dialog(source_path, en):
 
 
 if __name__ == "__main__":
-	source_path = 'data/trait_dialog_both.json'
+	source_path = 'data/samples_with_trait_self.json'
 	last_session =  json.load(open('results/last_session.json'))
 	en = last_session['en']
-	data = json.load(open(source_path))[:50][en:]
+	data = json.load(open(source_path))[en:]
 	if "annotated" not in st.session_state:
 		st.session_state.annotated = []
 		st.session_state.samples = data
@@ -81,7 +81,3 @@ if __name__ == "__main__":
 
 	
 
-#to do
-# correct the yes/no labels
-# collect and distribute qs from the same persona
-# numbers

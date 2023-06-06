@@ -7,8 +7,7 @@
 
 ## How to run:
 - install streamlit: `pip install streamlit`
-- There are 2 files in `data`: `trait_dialog_both.json` and `trait_dialog_self.json`. The idea is to do a trial on 10 samples from each (each sample has 5 pairs to be anotated!).
-- You can specify the source file in `eval_trait.py`, line 63. You can start as it is and then change it to the other file.
 - Running `streamlit run eval_trait.py` starts a server and opens a tab in your browser with the first sample: A pair of dialogs and a radio buttom to specify which one (Model1 or Model2) has the "higer" mentioned attribute (or it's the same).
-- Clicking on `Next` after each annotation, shows the next pair. 5 of these pairs (each for a trait) complete 1 sample.
-- At each point you can click on `Save&Exit` to save and exit. The results will be saved in the path mentioned in `eval_trait.py`, line 72. Next time that you run the code, it will start in the same (in line 63) from the place you left. 
+- You will be judging the `<agent>` traits from their utterances which (hopefully) are displayed as bold. On the left panel you see the Persona for `<agent>`. It is provided so that you can have a better judgement for that trait: ideally we look for manifestations of traits beyond the trivial implications of persona facts, but this is not always straitforward, so just have that in mind, and use it if applicable but don't push it! In addition, ignore explicit and bold references to traits, specially if used in the "noun" form (e.g. I have very high conscientiousness!).
+- Clicking on `Next` after each annotation, shows the next pair. 
+- At each point you can click on `Save&Exit` to save and exit. The results will be saved in the path mentioned in the `results` folder (`eval_trait.py`, line 34), along with a file called `last_session.json` which keeps track of sessions. Next time that you run the code, it will start from the place you left. 
