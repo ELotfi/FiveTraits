@@ -33,7 +33,7 @@ def save_data(source_path, en):
 	current_idx = st.session_state.current_index
 	results_path = f'results/annot_{source_path[5:-5]}_{en}_{en + current_idx}.json'
 	json.dump(annotated, open(results_path, 'w'))
-	json.dump({'st':en, 'en':current_idx}, open('results/last_session.json', 'w'))
+	json.dump({'st':en, 'en':en+current_idx}, open('results/last_session.json', 'w'))
 
 
 
